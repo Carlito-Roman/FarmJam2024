@@ -26,6 +26,8 @@ namespace Com.Player
 
         private void Start() => characterController = GetComponent<CharacterController>();
 
+
+
         #endregion
 
         #region Public Methods
@@ -37,6 +39,13 @@ namespace Com.Player
             moveDirection.y = 0;
 
             Vector3 movementVelocity = moveDirection;
+
+            if (isGrounded()) {
+                movementVelocity.y = -2f;
+            }  else {
+                movementVelocity.y += Physics.gravity.y * Time.deltaTime;
+            }
+
             characterController.Move(movementVelocity * moveSpeed * Time.deltaTime);
         }
 
@@ -62,7 +71,10 @@ namespace Com.Player
 
         #region Private Methods
 
-
+        private bool isGrounded()
+        {
+            return characterController.isGrounded;
+        }
 
         #endregion
 
