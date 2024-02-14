@@ -7,11 +7,14 @@ public class CollectableItem : Interactable
 
     [SerializeField] private InventoryItemData itemData;
 
+    #region MonoBehaviour Callbacks
 
     private void Awake()
     {
         SetPrompt();
     }
+
+    #endregion
 
     protected override void Interact()
     {
@@ -25,6 +28,8 @@ public class CollectableItem : Interactable
             Destroy(this.gameObject);
         }
     }
+
+    #region Private Methods
 
     private void SetPrompt()
     {
@@ -49,4 +54,6 @@ public class CollectableItem : Interactable
 
         promptedMessage = actionPhrase + itemData.itemDisplayName;
     }
+
+    #endregion
 }

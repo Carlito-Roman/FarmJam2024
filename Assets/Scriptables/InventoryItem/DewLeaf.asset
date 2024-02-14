@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: DewLeaf
   m_EditorClassIdentifier: 
   itemID: 2
-  itemIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  itemIcon: {fileID: 21300000, guid: c0db03e9554f6444dba35cdc7af3a345, type: 3}
   itemType: 1
   itemDisplayName: Dew Leaf
   itemDescription: 
-  collectionRate: {x: 3, y: 3}
-  maxStackCount: 3
+  collectionRate: {x: 2, y: 2}
+  maxStackCount: 6
+  goldValue: 0

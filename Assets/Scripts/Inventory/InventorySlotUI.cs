@@ -1,9 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.TextCore.Text;
 
 public class InventorySlotUI : MonoBehaviour
 {
+
+    #region Variables
 
     [SerializeField] private Image itemSprite;
     [SerializeField] private TextMeshProUGUI itemCount;
@@ -11,9 +14,12 @@ public class InventorySlotUI : MonoBehaviour
 
     private Button button;
 
-    public InventorySlot AssignedSlot => assignedSlot;
+    public InventorySlot AssignedInventorySlot => assignedSlot;
     public InventoryDisplay ParentDisplay { get; private set; }
 
+    #endregion
+
+    #region MonoBehaviour Callbacks
 
     private void Awake()
     {
@@ -26,6 +32,10 @@ public class InventorySlotUI : MonoBehaviour
 
     }
 
+    #endregion
+
+    #region Public Methods
+
     public void Init(InventorySlot slot)
     {
         assignedSlot = slot;
@@ -33,8 +43,8 @@ public class InventorySlotUI : MonoBehaviour
     }
 
     public void UpdateUISlot(InventorySlot slot) {
-        if (slot.Data != null) {
-            itemSprite.sprite = slot.Data.itemIcon;
+        if (slot.ItemData != null) {
+            itemSprite.sprite = slot.ItemData.itemIcon;
             itemSprite.color = Color.white;
 
             itemCount.text = slot.StackSize > 1 ? slot.StackSize.ToString() : string.Empty;
@@ -63,4 +73,7 @@ public class InventorySlotUI : MonoBehaviour
     {
         ParentDisplay?.SlotClicked(this);
     }
+
+    #endregion
+
 }

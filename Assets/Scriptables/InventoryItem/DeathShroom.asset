@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: DeathShroom
   m_EditorClassIdentifier: 
   itemID: 1
-  itemIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  itemIcon: {fileID: 21300000, guid: 552e2a705e3c2fa40b45049bf5c99297, type: 3}
   itemType: 1
   itemDisplayName: Death Shroom
   itemDescription: 
   collectionRate: {x: 1, y: 1}
   maxStackCount: 2
+  goldValue: 0

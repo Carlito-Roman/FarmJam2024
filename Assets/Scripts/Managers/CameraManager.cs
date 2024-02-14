@@ -24,11 +24,18 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private float xRotMinMax = 40f;
     private float xRotation = 0;
 
+    private bool isInInventory = false;
+
     #endregion
 
     #region MonoBehaviour Callbacks
 
     private void Awake() => player = FindObjectOfType<PlayerInputManager>().transform;
+
+    private void Update()
+    {
+        SetCursorState(isInInventory);
+    }
 
     private void LateUpdate() {
         FollowPlayer();
@@ -39,6 +46,9 @@ public class CameraManager : MonoBehaviour
     #region Public Methods
 
     public void HandleCameraLook(Vector2 input) {
+
+        if(isInInventory) { return; }
+
         float MouseX = input.x * lookSensitivityX * Time.deltaTime;
         float MouseY = input.y * lookSensitivityY * Time.deltaTime;
 
@@ -49,6 +59,11 @@ public class CameraManager : MonoBehaviour
         anchorTarget.rotation = Quaternion.Euler(xRotation, anchorTarget.localEulerAngles.y, 0f);
     }
 
+    public void HandleSwapToUI()
+    {
+        isInInventory = !isInInventory;
+    }
+
     #endregion
 
     #region Private Methods
@@ -56,6 +71,12 @@ public class CameraManager : MonoBehaviour
     private void FollowPlayer() {
         Vector3 targetPos = player.position + offset;
         anchorTarget.position = Vector3.SmoothDamp(anchorTarget.position, targetPos, ref cameraVelocity, camSmoothing);
+    }
+
+    private void SetCursorState(bool input)
+    {
+        Cursor.visible = input ? true : false;
+        Cursor.lockState = input ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
 

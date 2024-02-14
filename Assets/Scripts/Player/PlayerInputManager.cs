@@ -29,6 +29,8 @@ namespace Com.Player
             animatorManager.UpdateAnimator(0, animatorManager.moveAmount);
 
             camManager.HandleCameraLook(playerActions.Look.ReadValue<Vector2>());
+
+            playerActions.SwapToInventory.performed += ctx => camManager.HandleSwapToUI();
         }
 
         #region - Enable / Disable -

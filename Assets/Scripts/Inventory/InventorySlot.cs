@@ -5,10 +5,10 @@ public class InventorySlot
 {
     #region Variables
 
-    [SerializeField] private InventoryItemData data;
+    [SerializeField] private InventoryItemData itemData;
     [SerializeField] private int stackSize;
 
-    public InventoryItemData Data => data;
+    public InventoryItemData ItemData => itemData;
     public int StackSize => stackSize;
 
     #endregion
@@ -17,7 +17,7 @@ public class InventorySlot
 
     public InventorySlot(InventoryItemData source, int amount)
     {
-        data = source;
+        itemData = source;
         stackSize = amount;
     }
 
@@ -28,30 +28,48 @@ public class InventorySlot
 
     public void UpdateInventorySlot(InventoryItemData itemData, int amount)
     {
-        data = itemData;
+        this.itemData = itemData;
         stackSize = amount;
     }
 
-    public bool RoomLeftInStack(int amountToAdd, out int amountRemaining)
+    public void AssignItem(InventorySlot invSlot)
     {
-        amountRemaining = data.maxStackCount - stackSize;
-        return RoomLeftInStack(amountToAdd);
+        if (itemData == invSlot.itemData)
+        {
+            AddToStack(invSlot.stackSize);
+        }
+        else
+        {
+            itemData = invSlot.itemData;
+            stackSize = 0;
+            AddToStack(invSlot.stackSize);
+        }
     }
 
-    public bool RoomLeftInStack(int amountToAdd)
+    #region - Check if there is room left -
+
+    public bool isThereRoomInStack(int amountToAdd, out int amountRemaining)
     {
-        if(stackSize + amountToAdd <= data.maxStackCount) {
+        amountRemaining = itemData.maxStackCount - stackSize;
+        return isThereRoomInStack(amountToAdd);
+    }
+
+    public bool isThereRoomInStack(int amountToAdd)
+    {
+        if(itemData == null || itemData != null && stackSize + amountToAdd <= itemData.maxStackCount) {
             return true;
         } else {
             return false;
         }
     }
 
+    #endregion 
+
     #region - Clear / Add To / Remove From Stock in Inventory Slot -
 
     public void ClearSlot()
     {
-        data = null;
+        itemData = null;
         stackSize = -1;
     }
 
