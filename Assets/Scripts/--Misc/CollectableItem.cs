@@ -1,32 +1,40 @@
+using Com.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class CollectableItem : Interactable
+public class CollectableItem : Promptable, IInteractable
 {
 
     [SerializeField] private InventoryItemData itemData;
 
+    UnityAction<IInteractable> IInteractable.OnInteractionComplete { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
     #region MonoBehaviour Callbacks
 
-    private void Awake()
-    {
+    private void Awake() {
         SetPrompt();
     }
 
     #endregion
 
-    protected override void Interact()
+    public void Interact(PlayerInteractionManager interactionManager, out bool successfulInteraction)
     {
-        base.Interact();
-        var inventory = FindObjectOfType<InventoryHolder>();
+        var inventory = FindObjectOfType<PlayerInventoryManager>();
 
-        if (inventory == null) { return; }
+        if (!inventory) { successfulInteraction = false; }
 
-        if (inventory.InventorySystem.AddToInventory(itemData, itemData.CollectResourceAmount()))
-        {
-            Destroy(this.gameObject);
+        if (inventory.PrimaryInventorySystem.AddToInventory(itemData, itemData.CollectResourceAmount())) {
+            Destroy(this.gameObject);       
         }
+        successfulInteraction = true;
+
+    }
+
+    public void EndInteraction()
+    {
+
     }
 
     #region Private Methods

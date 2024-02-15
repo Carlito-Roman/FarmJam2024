@@ -62,6 +62,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenBackpack"",
+                    ""type"": ""Button"",
+                    ""id"": ""15668d52-f340-4900-beb3-a4cd8d3e35a8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -185,6 +194,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""SwapToInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6e61a273-a74f-4de5-b897-5c0d91f93d6c"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenBackpack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -225,6 +245,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_SwapToInventory = m_Player.FindAction("SwapToInventory", throwIfNotFound: true);
+        m_Player_OpenBackpack = m_Player.FindAction("OpenBackpack", throwIfNotFound: true);
         // Inventory
         m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
         m_Inventory_Newaction = m_Inventory.FindAction("New action", throwIfNotFound: true);
@@ -293,6 +314,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_SwapToInventory;
+    private readonly InputAction m_Player_OpenBackpack;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -301,6 +323,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @SwapToInventory => m_Wrapper.m_Player_SwapToInventory;
+        public InputAction @OpenBackpack => m_Wrapper.m_Player_OpenBackpack;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -322,6 +345,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SwapToInventory.started += instance.OnSwapToInventory;
             @SwapToInventory.performed += instance.OnSwapToInventory;
             @SwapToInventory.canceled += instance.OnSwapToInventory;
+            @OpenBackpack.started += instance.OnOpenBackpack;
+            @OpenBackpack.performed += instance.OnOpenBackpack;
+            @OpenBackpack.canceled += instance.OnOpenBackpack;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -338,6 +364,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SwapToInventory.started -= instance.OnSwapToInventory;
             @SwapToInventory.performed -= instance.OnSwapToInventory;
             @SwapToInventory.canceled -= instance.OnSwapToInventory;
+            @OpenBackpack.started -= instance.OnOpenBackpack;
+            @OpenBackpack.performed -= instance.OnOpenBackpack;
+            @OpenBackpack.canceled -= instance.OnOpenBackpack;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -407,6 +436,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnSwapToInventory(InputAction.CallbackContext context);
+        void OnOpenBackpack(InputAction.CallbackContext context);
     }
     public interface IInventoryActions
     {

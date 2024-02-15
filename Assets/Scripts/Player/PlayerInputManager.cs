@@ -17,6 +17,8 @@ namespace Com.Player
 
         private CameraManager camManager;
 
+        private PlayerInventoryManager inventoryManager;
+
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -31,6 +33,7 @@ namespace Com.Player
             camManager.HandleCameraLook(playerActions.Look.ReadValue<Vector2>());
 
             playerActions.SwapToInventory.performed += ctx => camManager.HandleSwapToUI();
+            playerActions.OpenBackpack.performed += ctx => inventoryManager.OpenBackpackUI();
         }
 
         #region - Enable / Disable -
@@ -67,6 +70,8 @@ namespace Com.Player
             animatorManager = GetComponent<PlayerAnimatorManager>();
 
             camManager = FindObjectOfType<CameraManager>();
+
+            inventoryManager = GetComponent<PlayerInventoryManager>();
         }
 
         #endregion

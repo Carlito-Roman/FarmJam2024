@@ -16,6 +16,8 @@ namespace Com.Player
         private PlayerUI UI;
         private PlayerInputManager inputManager;
 
+        private bool isInteracting = false;
+
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -33,19 +35,21 @@ namespace Com.Player
             Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.green);
 
             RaycastHit hitInfo;
-            if(Physics.Raycast(ray, out hitInfo, rayDistance, interactableLayer)) {
+            if (Physics.Raycast(ray, out hitInfo, rayDistance, interactableLayer)) {
 
-                Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
+                IInteractable interactable = hitInfo.collider.GetComponent<IInteractable>();
+                Promptable prompt = hitInfo.collider.GetComponent<Promptable>();
 
-                if (interactable != null)  {
-                    UI.UpdatePromptText(interactable.promptedMessage);
+                if (interactable != null) {
 
-                    if(inputManager.playerActions.Interact.triggered) {
-                        interactable.BaseInteract();
+                    if (inputManager.playerActions.Interact.triggered) {
+                        StartInteraction(interactable);
                     }
+
+                    if (prompt != null) { UI.UpdatePromptText(prompt.promptedMessage); }
                 } 
             } else {
-                UI.UpdatePromptText(string.Empty);
+                UI.UpdatePromptText("");
             }
         }
 
@@ -59,7 +63,14 @@ namespace Com.Player
 
         #region Private Methods
 
+        private void StartInteraction(IInteractable interactable) {
+            interactable.Interact(this, out bool interactionSuccessfull);
+            isInteracting = true;
+        }
 
+        private void EndInteraction() {
+            isInteracting = false;
+        }
 
         #endregion
 

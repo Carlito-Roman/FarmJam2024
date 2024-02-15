@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "OpenBackpack",
+                    "type": "Button",
+                    "id": "15668d52-f340-4900-beb3-a4cd8d3e35a8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -161,6 +170,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwapToInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6e61a273-a74f-4de5-b897-5c0d91f93d6c",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenBackpack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
